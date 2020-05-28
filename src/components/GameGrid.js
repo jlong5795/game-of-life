@@ -34,6 +34,17 @@ const GameGrid = () => {
   // set state to track generation counter
   const [generation, setGeneration] = useState(0);
 
+  // reset the game completely
+  const resetGame = (numRows, numCols) => {
+    setGrid(createRandomGrid(numRows, numCols))
+    setGeneration(0)
+  }
+
+  const clearGrid = (numRows, numCols) => {
+    setGrid(createGrid(numRows, numCols))
+    setGeneration(0)
+  }
+
   // when using a callback the current state value isn't read so use a ref bc it's always current
   const runSim = useCallback(() => {
     if (!runningRef.current) {
@@ -83,10 +94,10 @@ const GameGrid = () => {
       >
         {running ? "Stop" : "Start"}
       </button>
-      <button onClick={() => {setGrid(createGrid(numRows, numCols))}}>
+      <button onClick={() => {clearGrid(numRows, numCols)}}>
         Clear Grid
       </button>
-      <button onClick={() => {setGrid(createRandomGrid(numRows, numCols))}}>Generate Random</button>
+      <button onClick={() => {resetGame(numRows, numCols)}}>Generate Random</button>
       <p>Generation: {generation}</p>
       <div
         className='grid'
