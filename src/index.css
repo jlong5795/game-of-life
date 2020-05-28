@@ -5,9 +5,58 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #49A078;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+h1 {
+  color: #1F2421
+}
+
+h2{
+  text-decoration: underline;
+  color: #1F2421
+}
+
+.rules_container {
+  max-width: 40%;
+  margin: auto;
+  border: #1F2421 2px solid;
+  border-radius: 5%;
+  padding: 0 1.5% 1.0% 1.5%;
+  background-color: #9CC5A1;
+}
+
+p {
+  color: #1F2421
+}
+
+.rules_list {
+  max-width: 85%;
+  text-align: left;
+  margin: auto;
+  color: #1F2421
+}
+
+.button{
+  margin: 2%;
+}
+
+.button-rules{
+  margin: 4%
+}
+
+.grid {
+  min-width: 100%;
+  
+}
+
+.game-button {
+  padding: 1px;
 }

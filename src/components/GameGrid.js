@@ -1,9 +1,13 @@
 import React, { useState, useCallback, useRef } from "react";
+import { useHistory } from 'react-router-dom';
+import {Button} from '@material-ui/core';
 import produce from "immer";
 
 import { createGrid, createRandomGrid } from "../helpers/grid_utils";
 
 const GameGrid = () => {
+
+  const history = useHistory();
   // minimum number of rows and cols
   const numRows = 25;
   const numCols = 25;
@@ -83,6 +87,9 @@ const GameGrid = () => {
 
   return (
     <div>
+      <div className='button-rules'>
+      <Button variant='contained' color='default' onClick={() => history.push('/')}>View Rules</Button>
+      </div>
       <div
         className='grid'
         style={{
@@ -111,12 +118,12 @@ const GameGrid = () => {
                     : null
                 } // make sure you can't click if the sim is running
                 style={{
-                  width: 20,
-                  height: 20,
+                  width: 15,
+                  height: 15,
                   backgroundColor: grid[row_index][col_index]
                     ? "blue"
-                    : undefined,
-                  border: "solid 1px black",
+                    : '#216869',
+                  border: "solid 1px #DCE1DE",
                 }}
               />
             );
@@ -125,7 +132,11 @@ const GameGrid = () => {
       </div>
       <div>
         <p>Generation: {generation}</p>
-        <button
+        <span className='button-group'>
+          <span className='game-button'>
+        <Button
+        variant='contained'
+        color='default'
           onClick={() => {
             setRunning(!running);
             if (!running) {
@@ -135,21 +146,31 @@ const GameGrid = () => {
           }}
         >
           {running ? "Stop" : "Start"}
-        </button>
-        <button
+        </Button>
+        </span>
+        <span className='game-button'>
+        <Button
+        variant='contained'
+        color='default'
           onClick={() => {
             clearGrid(numRows, numCols);
           }}
         >
           Clear Grid
-        </button>
-        <button
+        </Button>
+        </span>
+        <span className='game-button'>
+        <Button
+        variant='contained'
+        color='default'
           onClick={() => {
             resetGame(numRows, numCols);
           }}
         >
           Generate Random
-        </button>
+        </Button>
+        </span>
+        </span>
       </div>
     </div>
   );
