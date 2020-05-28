@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef } from "react";
 import produce from "immer";
 
-import { createGrid, createRandomGrid } from '../helpers/grid_utils';
+import { createGrid, createRandomGrid } from "../helpers/grid_utils";
 
 const GameGrid = () => {
   // minimum number of rows and cols
@@ -22,7 +22,7 @@ const GameGrid = () => {
 
   // create state to store the values in our grid
   const [grid, setGrid] = useState(() => {
-   return createGrid(numRows, numCols);
+    return createGrid(numRows, numCols);
   });
 
   // so we can see if the game is active or not
@@ -36,14 +36,14 @@ const GameGrid = () => {
 
   // reset the game completely
   const resetGame = (numRows, numCols) => {
-    setGrid(createRandomGrid(numRows, numCols))
-    setGeneration(0)
-  }
+    setGrid(createRandomGrid(numRows, numCols));
+    setGeneration(0);
+  };
 
   const clearGrid = (numRows, numCols) => {
-    setGrid(createGrid(numRows, numCols))
-    setGeneration(0)
-  }
+    setGrid(createGrid(numRows, numCols));
+    setGeneration(0);
+  };
 
   // when using a callback the current state value isn't read so use a ref bc it's always current
   const runSim = useCallback(() => {
@@ -52,10 +52,10 @@ const GameGrid = () => {
     }
 
     // tracks the current generation
-    setGeneration(prevState => prevState += 1)
+    setGeneration((prevState) => (prevState += 1));
     setGrid((currentGrid) => {
       // need a way to iterate over every cell
-      
+
       return produce(currentGrid, (gridCopy) => {
         for (let i = 0; i < numRows; i++) {
           for (let j = 0; j < numCols; j++) {
@@ -77,28 +77,12 @@ const GameGrid = () => {
         }
       });
     });
-    
+
     setTimeout(runSim, 500); // hey look recursion!
-  },[]);
+  }, []);
 
   return (
     <div>
-      <button
-        onClick={() => {
-          setRunning(!running);
-          if (!running) {
-            runningRef.current = true;
-            runSim();
-          }
-        }}
-      >
-        {running ? "Stop" : "Start"}
-      </button>
-      <button onClick={() => {clearGrid(numRows, numCols)}}>
-        Clear Grid
-      </button>
-      <button onClick={() => {resetGame(numRows, numCols)}}>Generate Random</button>
-      <p>Generation: {generation}</p>
       <div
         className='grid'
         style={{
@@ -111,17 +95,21 @@ const GameGrid = () => {
             return (
               <div
                 key={`${col_index}-${col_index}`}
-                onClick={!running ? () => {
-                  const newGrid = produce(grid, (gridCopy) => {
-                    gridCopy[row_index][col_index] = gridCopy[row_index][
-                      col_index
-                    ]
-                      ? 0
-                      : 1;
-                  });
+                onClick={
+                  !running
+                    ? () => {
+                        const newGrid = produce(grid, (gridCopy) => {
+                          gridCopy[row_index][col_index] = gridCopy[row_index][
+                            col_index
+                          ]
+                            ? 0
+                            : 1;
+                        });
 
-                  setGrid(newGrid); // newGrid is my double buffer
-                } : null} // make sure you can't click if the sim is running
+                        setGrid(newGrid); // newGrid is my double buffer
+                      }
+                    : null
+                } // make sure you can't click if the sim is running
                 style={{
                   width: 20,
                   height: 20,
@@ -134,6 +122,34 @@ const GameGrid = () => {
             );
           })
         )}
+      </div>
+      <div>
+        <p>Generation: {generation}</p>
+        <button
+          onClick={() => {
+            setRunning(!running);
+            if (!running) {
+              runningRef.current = true;
+              runSim();
+            }
+          }}
+        >
+          {running ? "Stop" : "Start"}
+        </button>
+        <button
+          onClick={() => {
+            clearGrid(numRows, numCols);
+          }}
+        >
+          Clear Grid
+        </button>
+        <button
+          onClick={() => {
+            resetGame(numRows, numCols);
+          }}
+        >
+          Generate Random
+        </button>
       </div>
     </div>
   );
