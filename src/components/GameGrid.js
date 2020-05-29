@@ -1,16 +1,16 @@
-import React, { useState, useCallback, useRef } from "react";
-import { useHistory } from 'react-router-dom';
-import {Button} from '@material-ui/core';
+import React, { useState, useCallback, useRef, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { Button, TextField } from "@material-ui/core";
 import produce from "immer";
 
 import { createGrid, createRandomGrid } from "../helpers/grid_utils";
 
 const GameGrid = () => {
-
   const history = useHistory();
+
   // minimum number of rows and cols
-  const numRows = 25;
-  const numCols = 25;
+  let numRows = 25;
+  let numCols = 25;
 
   // represents all of the cells to be checked from each cell
   const operations = [
@@ -67,7 +67,12 @@ const GameGrid = () => {
             operations.forEach(([x, y]) => {
               const newI = i + x;
               const newJ = j + y;
-              if (newI >= 0 && newI < numRows && newJ >= 0 && newJ < numCols) {
+              if (
+                newI >= 0 &&
+                newI < numRows &&
+                newJ >= 0 &&
+                newJ < numCols
+              ) {
                 neighbors += currentGrid[newI][newJ]; // adds the value of a cell. Live = 1, dead = 0
               }
             });
@@ -88,7 +93,13 @@ const GameGrid = () => {
   return (
     <div>
       <div className='button-rules'>
-      <Button variant='contained' color='default' onClick={() => history.push('/')}>View Rules</Button>
+        <Button
+          variant='contained'
+          color='default'
+          onClick={() => history.push("/")}
+        >
+          View Rules
+        </Button>
       </div>
       <div
         className='grid'
@@ -122,7 +133,7 @@ const GameGrid = () => {
                   height: 15,
                   backgroundColor: grid[row_index][col_index]
                     ? "blue"
-                    : '#216869',
+                    : "#216869",
                   border: "solid 1px #DCE1DE",
                 }}
               />
@@ -134,42 +145,42 @@ const GameGrid = () => {
         <p>Generation: {generation}</p>
         <span className='button-group'>
           <span className='game-button'>
-        <Button
-        variant='contained'
-        color='default'
-          onClick={() => {
-            setRunning(!running);
-            if (!running) {
-              runningRef.current = true;
-              runSim();
-            }
-          }}
-        >
-          {running ? "Stop" : "Start"}
-        </Button>
-        </span>
-        <span className='game-button'>
-        <Button
-        variant='contained'
-        color='default'
-          onClick={() => {
-            clearGrid(numRows, numCols);
-          }}
-        >
-          Clear Grid
-        </Button>
-        </span>
-        <span className='game-button'>
-        <Button
-        variant='contained'
-        color='default'
-          onClick={() => {
-            resetGame(numRows, numCols);
-          }}
-        >
-          Generate Random
-        </Button>
-        </span>
+            <Button
+              variant='contained'
+              color='default'
+              onClick={() => {
+                setRunning(!running);
+                if (!running) {
+                  runningRef.current = true;
+                  runSim();
+                }
+              }}
+            >
+              {running ? "Stop" : "Start"}
+            </Button>
+          </span>
+          <span className='game-button'>
+            <Button
+              variant='contained'
+              color='default'
+              onClick={() => {
+                clearGrid(numRows, numCols);
+              }}
+            >
+              Clear Grid
+            </Button>
+          </span>
+          <span className='game-button'>
+            <Button
+              variant='contained'
+              color='default'
+              onClick={() => {
+                resetGame(numRows, numCols);
+              }}
+            >
+              Generate Random
+            </Button>
+          </span>
         </span>
       </div>
     </div>
