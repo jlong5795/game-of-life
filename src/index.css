@@ -52,11 +52,14 @@ p {
   margin: 4%
 }
 
-.grid {
-  min-width: 100%;
-  
-}
-
 .game-button {
   padding: 1px;
+}
+
+.grid {
+  margin:5% 0 5% 25%;
+}
+
+.form {
+  margin: auto;
 }
